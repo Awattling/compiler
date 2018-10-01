@@ -139,12 +139,6 @@ ply.lex.lex()
 
 
 ## Lexing function ##
-def lex():
-	hello = ply.lex.input("x + 43")
-	
-	
-	print(hello)
-
 def lex(strList):
 
 	tokens = []

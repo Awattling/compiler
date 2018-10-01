@@ -160,42 +160,42 @@ state 0
 
     BEGIN           reduce using rule 4 (declarations -> .)
     VAR             shift and go to state 8
-    FUN             shift and go to state 6
+    FUN             shift and go to state 2
 
-    var_declaration                shift and go to state 1
-    declarations                   shift and go to state 2
-    block                          shift and go to state 3
-    prog                           shift and go to state 4
-    fun_declaration                shift and go to state 7
+    prog                           shift and go to state 1
+    fun_declaration                shift and go to state 3
+    block                          shift and go to state 4
+    declarations                   shift and go to state 6
+    var_declaration                shift and go to state 7
     declaration                    shift and go to state 5
 
 state 1
 
-    (5) declaration -> var_declaration .
+    (0) S' -> prog .
 
-    SEMICOLON       reduce using rule 5 (declaration -> var_declaration .)
 
 
 state 2
 
-    (2) block -> declarations . program_body
-    (19) program_body -> . BEGIN prog_stmts END
+    (9) fun_declaration -> FUN . identifier param_list COLON type CLPAR fun_block CRPAR
+    (16) identifier -> . ID
 
-    BEGIN           shift and go to state 10
+    ID              shift and go to state 9
 
-    program_body                   shift and go to state 9
+    identifier                     shift and go to state 10
 
 state 3
 
-    (1) prog -> block .
+    (6) declaration -> fun_declaration .
 
-    $end            reduce using rule 1 (prog -> block .)
+    SEMICOLON       reduce using rule 6 (declaration -> fun_declaration .)
 
 
 state 4
 
-    (0) S' -> prog .
+    (1) prog -> block .
 
+    $end            reduce using rule 1 (prog -> block .)
 
 
 state 5
@@ -207,18 +207,18 @@ state 5
 
 state 6
 
-    (9) fun_declaration -> FUN . identifier param_list COLON type CLPAR fun_block CRPAR
-    (16) identifier -> . ID
+    (2) block -> declarations . program_body
+    (19) program_body -> . BEGIN prog_stmts END
 
-    ID              shift and go to state 12
+    BEGIN           shift and go to state 12
 
-    identifier                     shift and go to state 13
+    program_body                   shift and go to state 13
 
 state 7
 
-    (6) declaration -> fun_declaration .
+    (5) declaration -> var_declaration .
 
-    SEMICOLON       reduce using rule 6 (declaration -> fun_declaration .)
+    SEMICOLON       reduce using rule 5 (declaration -> var_declaration .)
 
 
 state 8
@@ -227,41 +227,27 @@ state 8
     (8) basic_var_declaration -> . identifier COLON type
     (16) identifier -> . ID
 
-    ID              shift and go to state 12
+    ID              shift and go to state 9
 
-    basic_var_declaration          shift and go to state 14
-    identifier                     shift and go to state 15
+    basic_var_declaration          shift and go to state 15
+    identifier                     shift and go to state 14
 
 state 9
 
-    (2) block -> declarations program_body .
+    (16) identifier -> ID .
 
-    CRPAR           reduce using rule 2 (block -> declarations program_body .)
-    $end            reduce using rule 2 (block -> declarations program_body .)
+    LPAR            reduce using rule 16 (identifier -> ID .)
+    COLON           reduce using rule 16 (identifier -> ID .)
 
 
 state 10
 
-    (19) program_body -> BEGIN . prog_stmts END
-    (22) prog_stmts -> . prog_stmt SEMICOLON prog_stmts
-    (23) prog_stmts -> .
-    (24) prog_stmt -> . IF expr THEN prog_stmt ELSE prog_stmt
-    (25) prog_stmt -> . WHILE expr DO prog_stmt
-    (26) prog_stmt -> . READ ID
-    (27) prog_stmt -> . ID ASSIGN expr
-    (28) prog_stmt -> . PRINT expr
-    (29) prog_stmt -> . CLPAR block CRPAR
+    (9) fun_declaration -> FUN identifier . param_list COLON type CLPAR fun_block CRPAR
+    (11) param_list -> . LPAR parameters RPAR
 
-    END             reduce using rule 23 (prog_stmts -> .)
-    IF              shift and go to state 17
-    WHILE           shift and go to state 22
-    READ            shift and go to state 23
-    ID              shift and go to state 18
-    PRINT           shift and go to state 20
-    CLPAR           shift and go to state 19
+    LPAR            shift and go to state 16
 
-    prog_stmt                      shift and go to state 16
-    prog_stmts                     shift and go to state 21
+    param_list                     shift and go to state 17
 
 state 11
 
@@ -282,114 +268,112 @@ state 11
     CLPAR           reduce using rule 4 (declarations -> .)
     RETURN          reduce using rule 4 (declarations -> .)
     VAR             shift and go to state 8
-    FUN             shift and go to state 6
+    FUN             shift and go to state 2
 
-    fun_declaration                shift and go to state 7
-    declarations                   shift and go to state 24
-    var_declaration                shift and go to state 1
+    declarations                   shift and go to state 18
+    fun_declaration                shift and go to state 3
+    var_declaration                shift and go to state 7
     declaration                    shift and go to state 5
 
 state 12
 
-    (16) identifier -> ID .
+    (19) program_body -> BEGIN . prog_stmts END
+    (22) prog_stmts -> . prog_stmt SEMICOLON prog_stmts
+    (23) prog_stmts -> .
+    (24) prog_stmt -> . IF expr THEN prog_stmt ELSE prog_stmt
+    (25) prog_stmt -> . WHILE expr DO prog_stmt
+    (26) prog_stmt -> . READ ID
+    (27) prog_stmt -> . ID ASSIGN expr
+    (28) prog_stmt -> . PRINT expr
+    (29) prog_stmt -> . CLPAR block CRPAR
 
-    LPAR            reduce using rule 16 (identifier -> ID .)
-    COLON           reduce using rule 16 (identifier -> ID .)
+    END             reduce using rule 23 (prog_stmts -> .)
+    IF              shift and go to state 25
+    WHILE           shift and go to state 22
+    READ            shift and go to state 23
+    ID              shift and go to state 24
+    PRINT           shift and go to state 21
+    CLPAR           shift and go to state 26
 
+    prog_stmt                      shift and go to state 19
+    prog_stmts                     shift and go to state 20
 
 state 13
 
-    (9) fun_declaration -> FUN identifier . param_list COLON type CLPAR fun_block CRPAR
-    (11) param_list -> . LPAR parameters RPAR
+    (2) block -> declarations program_body .
 
-    LPAR            shift and go to state 26
+    CRPAR           reduce using rule 2 (block -> declarations program_body .)
+    $end            reduce using rule 2 (block -> declarations program_body .)
 
-    param_list                     shift and go to state 25
 
 state 14
-
-    (7) var_declaration -> VAR basic_var_declaration .
-
-    SEMICOLON       reduce using rule 7 (var_declaration -> VAR basic_var_declaration .)
-
-
-state 15
 
     (8) basic_var_declaration -> identifier . COLON type
 
     COLON           shift and go to state 27
 
 
+state 15
+
+    (7) var_declaration -> VAR basic_var_declaration .
+
+    SEMICOLON       reduce using rule 7 (var_declaration -> VAR basic_var_declaration .)
+
+
 state 16
 
-    (22) prog_stmts -> prog_stmt . SEMICOLON prog_stmts
+    (11) param_list -> LPAR . parameters RPAR
+    (12) parameters -> . parameters1
+    (13) parameters -> .
+    (14) parameters1 -> . parameters1 COMMA basic_var_declaration
+    (15) parameters1 -> . basic_var_declaration
+    (8) basic_var_declaration -> . identifier COLON type
+    (16) identifier -> . ID
 
-    SEMICOLON       shift and go to state 28
+    RPAR            reduce using rule 13 (parameters -> .)
+    ID              shift and go to state 9
 
+    parameters1                    shift and go to state 29
+    basic_var_declaration          shift and go to state 30
+    parameters                     shift and go to state 28
+    identifier                     shift and go to state 14
 
 state 17
 
-    (24) prog_stmt -> IF . expr THEN prog_stmt ELSE prog_stmt
-    (30) expr -> . expr OR bint_term
-    (31) expr -> . bint_term
-    (32) bint_term -> . bint_term AND bint_factor
-    (33) bint_term -> . bint_factor
-    (34) bint_factor -> . NOT bint_factor
-    (35) bint_factor -> . int_expr compare_op int_expr
-    (36) bint_factor -> . int_expr
-    (42) int_expr -> . int_expr addop int_term
-    (43) int_expr -> . int_term
-    (46) int_term -> . int_term mulop int_factor
-    (47) int_term -> . int_factor
-    (50) int_factor -> . LPAR expr RPAR
-    (51) int_factor -> . ID argument_list
-    (52) int_factor -> . NUM
-    (53) int_factor -> . BVAL
-    (54) int_factor -> . SUB int_factor
+    (9) fun_declaration -> FUN identifier param_list . COLON type CLPAR fun_block CRPAR
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    COLON           shift and go to state 31
 
-    bint_factor                    shift and go to state 30
-    expr                           shift and go to state 33
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
-    bint_term                      shift and go to state 39
-    int_term                       shift and go to state 38
 
 state 18
 
-    (27) prog_stmt -> ID . ASSIGN expr
+    (3) declarations -> declaration SEMICOLON declarations .
 
-    ASSIGN          shift and go to state 41
+    BEGIN           reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
+    IF              reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
+    WHILE           reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
+    READ            reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
+    ID              reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
+    PRINT           reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
+    CLPAR           reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
+    RETURN          reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
 
 
 state 19
 
-    (29) prog_stmt -> CLPAR . block CRPAR
-    (2) block -> . declarations program_body
-    (3) declarations -> . declaration SEMICOLON declarations
-    (4) declarations -> .
-    (5) declaration -> . var_declaration
-    (6) declaration -> . fun_declaration
-    (7) var_declaration -> . VAR basic_var_declaration
-    (9) fun_declaration -> . FUN identifier param_list COLON type CLPAR fun_block CRPAR
+    (22) prog_stmts -> prog_stmt . SEMICOLON prog_stmts
 
-    BEGIN           reduce using rule 4 (declarations -> .)
-    VAR             shift and go to state 8
-    FUN             shift and go to state 6
+    SEMICOLON       shift and go to state 32
 
-    var_declaration                shift and go to state 1
-    declarations                   shift and go to state 2
-    block                          shift and go to state 42
-    fun_declaration                shift and go to state 7
-    declaration                    shift and go to state 5
 
 state 20
+
+    (19) program_body -> BEGIN prog_stmts . END
+
+    END             shift and go to state 33
+
+
+state 21
 
     (28) prog_stmt -> PRINT . expr
     (30) expr -> . expr OR bint_term
@@ -409,26 +393,19 @@ state 20
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 30
-    expr                           shift and go to state 43
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
-    bint_term                      shift and go to state 39
-    int_term                       shift and go to state 38
-
-state 21
-
-    (19) program_body -> BEGIN prog_stmts . END
-
-    END             shift and go to state 44
-
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    expr                           shift and go to state 37
+    int_factor                     shift and go to state 40
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 45
 
 state 22
 
@@ -450,104 +427,41 @@ state 22
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 30
-    expr                           shift and go to state 45
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
-    bint_term                      shift and go to state 39
-    int_term                       shift and go to state 38
+    int_expr                       shift and go to state 36
+    expr                           shift and go to state 46
+    int_factor                     shift and go to state 40
+    int_term                       shift and go to state 34
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 45
 
 state 23
 
     (26) prog_stmt -> READ . ID
 
-    ID              shift and go to state 46
+    ID              shift and go to state 47
 
 
 state 24
 
-    (3) declarations -> declaration SEMICOLON declarations .
+    (27) prog_stmt -> ID . ASSIGN expr
 
-    BEGIN           reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
-    IF              reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
-    WHILE           reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
-    READ            reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
-    ID              reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
-    PRINT           reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
-    CLPAR           reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
-    RETURN          reduce using rule 3 (declarations -> declaration SEMICOLON declarations .)
+    ASSIGN          shift and go to state 48
 
 
 state 25
 
-    (9) fun_declaration -> FUN identifier param_list . COLON type CLPAR fun_block CRPAR
-
-    COLON           shift and go to state 47
-
-
-state 26
-
-    (11) param_list -> LPAR . parameters RPAR
-    (12) parameters -> . parameters1
-    (13) parameters -> .
-    (14) parameters1 -> . parameters1 COMMA basic_var_declaration
-    (15) parameters1 -> . basic_var_declaration
-    (8) basic_var_declaration -> . identifier COLON type
-    (16) identifier -> . ID
-
-    RPAR            reduce using rule 13 (parameters -> .)
-    ID              shift and go to state 12
-
-    parameters1                    shift and go to state 48
-    parameters                     shift and go to state 49
-    basic_var_declaration          shift and go to state 50
-    identifier                     shift and go to state 15
-
-state 27
-
-    (8) basic_var_declaration -> identifier COLON . type
-    (17) type -> . INT
-    (18) type -> . BOOL
-
-    INT             shift and go to state 51
-    BOOL            shift and go to state 52
-
-    type                           shift and go to state 53
-
-state 28
-
-    (22) prog_stmts -> prog_stmt SEMICOLON . prog_stmts
-    (22) prog_stmts -> . prog_stmt SEMICOLON prog_stmts
-    (23) prog_stmts -> .
-    (24) prog_stmt -> . IF expr THEN prog_stmt ELSE prog_stmt
-    (25) prog_stmt -> . WHILE expr DO prog_stmt
-    (26) prog_stmt -> . READ ID
-    (27) prog_stmt -> . ID ASSIGN expr
-    (28) prog_stmt -> . PRINT expr
-    (29) prog_stmt -> . CLPAR block CRPAR
-
-    END             reduce using rule 23 (prog_stmts -> .)
-    RETURN          reduce using rule 23 (prog_stmts -> .)
-    IF              shift and go to state 17
-    WHILE           shift and go to state 22
-    READ            shift and go to state 23
-    ID              shift and go to state 18
-    PRINT           shift and go to state 20
-    CLPAR           shift and go to state 19
-
-    prog_stmt                      shift and go to state 16
-    prog_stmts                     shift and go to state 54
-
-state 29
-
-    (34) bint_factor -> NOT . bint_factor
+    (24) prog_stmt -> IF . expr THEN prog_stmt ELSE prog_stmt
+    (30) expr -> . expr OR bint_term
+    (31) expr -> . bint_term
+    (32) bint_term -> . bint_term AND bint_factor
+    (33) bint_term -> . bint_factor
     (34) bint_factor -> . NOT bint_factor
     (35) bint_factor -> . int_expr compare_op int_expr
     (36) bint_factor -> . int_expr
@@ -561,33 +475,147 @@ state 29
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 55
-    int_term                       shift and go to state 38
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
+    int_expr                       shift and go to state 36
+    expr                           shift and go to state 49
+    int_factor                     shift and go to state 40
+    int_term                       shift and go to state 34
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 45
+
+state 26
+
+    (29) prog_stmt -> CLPAR . block CRPAR
+    (2) block -> . declarations program_body
+    (3) declarations -> . declaration SEMICOLON declarations
+    (4) declarations -> .
+    (5) declaration -> . var_declaration
+    (6) declaration -> . fun_declaration
+    (7) var_declaration -> . VAR basic_var_declaration
+    (9) fun_declaration -> . FUN identifier param_list COLON type CLPAR fun_block CRPAR
+
+    BEGIN           reduce using rule 4 (declarations -> .)
+    VAR             shift and go to state 8
+    FUN             shift and go to state 2
+
+    block                          shift and go to state 50
+    declarations                   shift and go to state 6
+    fun_declaration                shift and go to state 3
+    var_declaration                shift and go to state 7
+    declaration                    shift and go to state 5
+
+state 27
+
+    (8) basic_var_declaration -> identifier COLON . type
+    (17) type -> . INT
+    (18) type -> . BOOL
+
+    INT             shift and go to state 52
+    BOOL            shift and go to state 53
+
+    type                           shift and go to state 51
+
+state 28
+
+    (11) param_list -> LPAR parameters . RPAR
+
+    RPAR            shift and go to state 54
+
+
+state 29
+
+    (12) parameters -> parameters1 .
+    (14) parameters1 -> parameters1 . COMMA basic_var_declaration
+
+    RPAR            reduce using rule 12 (parameters -> parameters1 .)
+    COMMA           shift and go to state 55
+
 
 state 30
 
-    (33) bint_term -> bint_factor .
+    (15) parameters1 -> basic_var_declaration .
 
-    AND             reduce using rule 33 (bint_term -> bint_factor .)
-    THEN            reduce using rule 33 (bint_term -> bint_factor .)
-    OR              reduce using rule 33 (bint_term -> bint_factor .)
-    SEMICOLON       reduce using rule 33 (bint_term -> bint_factor .)
-    ELSE            reduce using rule 33 (bint_term -> bint_factor .)
-    DO              reduce using rule 33 (bint_term -> bint_factor .)
-    RPAR            reduce using rule 33 (bint_term -> bint_factor .)
-    COMMA           reduce using rule 33 (bint_term -> bint_factor .)
+    COMMA           reduce using rule 15 (parameters1 -> basic_var_declaration .)
+    RPAR            reduce using rule 15 (parameters1 -> basic_var_declaration .)
 
 
 state 31
+
+    (9) fun_declaration -> FUN identifier param_list COLON . type CLPAR fun_block CRPAR
+    (17) type -> . INT
+    (18) type -> . BOOL
+
+    INT             shift and go to state 52
+    BOOL            shift and go to state 53
+
+    type                           shift and go to state 56
+
+state 32
+
+    (22) prog_stmts -> prog_stmt SEMICOLON . prog_stmts
+    (22) prog_stmts -> . prog_stmt SEMICOLON prog_stmts
+    (23) prog_stmts -> .
+    (24) prog_stmt -> . IF expr THEN prog_stmt ELSE prog_stmt
+    (25) prog_stmt -> . WHILE expr DO prog_stmt
+    (26) prog_stmt -> . READ ID
+    (27) prog_stmt -> . ID ASSIGN expr
+    (28) prog_stmt -> . PRINT expr
+    (29) prog_stmt -> . CLPAR block CRPAR
+
+    END             reduce using rule 23 (prog_stmts -> .)
+    RETURN          reduce using rule 23 (prog_stmts -> .)
+    IF              shift and go to state 25
+    WHILE           shift and go to state 22
+    READ            shift and go to state 23
+    ID              shift and go to state 24
+    PRINT           shift and go to state 21
+    CLPAR           shift and go to state 26
+
+    prog_stmt                      shift and go to state 19
+    prog_stmts                     shift and go to state 57
+
+state 33
+
+    (19) program_body -> BEGIN prog_stmts END .
+
+    $end            reduce using rule 19 (program_body -> BEGIN prog_stmts END .)
+    CRPAR           reduce using rule 19 (program_body -> BEGIN prog_stmts END .)
+
+
+state 34
+
+    (43) int_expr -> int_term .
+    (46) int_term -> int_term . mulop int_factor
+    (48) mulop -> . MUL
+    (49) mulop -> . DIV
+
+    EQUAL           reduce using rule 43 (int_expr -> int_term .)
+    LT              reduce using rule 43 (int_expr -> int_term .)
+    GT              reduce using rule 43 (int_expr -> int_term .)
+    LE              reduce using rule 43 (int_expr -> int_term .)
+    GE              reduce using rule 43 (int_expr -> int_term .)
+    ADD             reduce using rule 43 (int_expr -> int_term .)
+    SUB             reduce using rule 43 (int_expr -> int_term .)
+    AND             reduce using rule 43 (int_expr -> int_term .)
+    SEMICOLON       reduce using rule 43 (int_expr -> int_term .)
+    OR              reduce using rule 43 (int_expr -> int_term .)
+    ELSE            reduce using rule 43 (int_expr -> int_term .)
+    DO              reduce using rule 43 (int_expr -> int_term .)
+    THEN            reduce using rule 43 (int_expr -> int_term .)
+    RPAR            reduce using rule 43 (int_expr -> int_term .)
+    COMMA           reduce using rule 43 (int_expr -> int_term .)
+    MUL             shift and go to state 60
+    DIV             shift and go to state 59
+
+    mulop                          shift and go to state 58
+
+state 35
 
     (53) int_factor -> BVAL .
 
@@ -604,13 +632,13 @@ state 31
     OR              reduce using rule 53 (int_factor -> BVAL .)
     SEMICOLON       reduce using rule 53 (int_factor -> BVAL .)
     ELSE            reduce using rule 53 (int_factor -> BVAL .)
-    THEN            reduce using rule 53 (int_factor -> BVAL .)
     DO              reduce using rule 53 (int_factor -> BVAL .)
+    THEN            reduce using rule 53 (int_factor -> BVAL .)
     RPAR            reduce using rule 53 (int_factor -> BVAL .)
     COMMA           reduce using rule 53 (int_factor -> BVAL .)
 
 
-state 32
+state 36
 
     (35) bint_factor -> int_expr . compare_op int_expr
     (36) bint_factor -> int_expr .
@@ -624,34 +652,86 @@ state 32
     (45) addop -> . SUB
 
     AND             reduce using rule 36 (bint_factor -> int_expr .)
-    RPAR            reduce using rule 36 (bint_factor -> int_expr .)
     OR              reduce using rule 36 (bint_factor -> int_expr .)
-    THEN            reduce using rule 36 (bint_factor -> int_expr .)
     SEMICOLON       reduce using rule 36 (bint_factor -> int_expr .)
     ELSE            reduce using rule 36 (bint_factor -> int_expr .)
     DO              reduce using rule 36 (bint_factor -> int_expr .)
+    THEN            reduce using rule 36 (bint_factor -> int_expr .)
+    RPAR            reduce using rule 36 (bint_factor -> int_expr .)
     COMMA           reduce using rule 36 (bint_factor -> int_expr .)
-    EQUAL           shift and go to state 61
-    LT              shift and go to state 64
-    GT              shift and go to state 58
-    LE              shift and go to state 62
-    GE              shift and go to state 60
-    ADD             shift and go to state 63
-    SUB             shift and go to state 59
+    EQUAL           shift and go to state 62
+    LT              shift and go to state 67
+    GT              shift and go to state 69
+    LE              shift and go to state 63
+    GE              shift and go to state 64
+    ADD             shift and go to state 66
+    SUB             shift and go to state 68
 
-    compare_op                     shift and go to state 56
-    addop                          shift and go to state 57
+    addop                          shift and go to state 61
+    compare_op                     shift and go to state 65
 
-state 33
+state 37
 
-    (24) prog_stmt -> IF expr . THEN prog_stmt ELSE prog_stmt
+    (28) prog_stmt -> PRINT expr .
     (30) expr -> expr . OR bint_term
 
-    THEN            shift and go to state 65
-    OR              shift and go to state 66
+    SEMICOLON       reduce using rule 28 (prog_stmt -> PRINT expr .)
+    ELSE            reduce using rule 28 (prog_stmt -> PRINT expr .)
+    OR              shift and go to state 70
 
 
-state 34
+state 38
+
+    (34) bint_factor -> NOT . bint_factor
+    (34) bint_factor -> . NOT bint_factor
+    (35) bint_factor -> . int_expr compare_op int_expr
+    (36) bint_factor -> . int_expr
+    (42) int_expr -> . int_expr addop int_term
+    (43) int_expr -> . int_term
+    (46) int_term -> . int_term mulop int_factor
+    (47) int_term -> . int_factor
+    (50) int_factor -> . LPAR expr RPAR
+    (51) int_factor -> . ID argument_list
+    (52) int_factor -> . NUM
+    (53) int_factor -> . BVAL
+    (54) int_factor -> . SUB int_factor
+
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
+
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    int_factor                     shift and go to state 40
+    bint_factor                    shift and go to state 71
+
+state 39
+
+    (52) int_factor -> NUM .
+
+    MUL             reduce using rule 52 (int_factor -> NUM .)
+    DIV             reduce using rule 52 (int_factor -> NUM .)
+    EQUAL           reduce using rule 52 (int_factor -> NUM .)
+    LT              reduce using rule 52 (int_factor -> NUM .)
+    GT              reduce using rule 52 (int_factor -> NUM .)
+    LE              reduce using rule 52 (int_factor -> NUM .)
+    GE              reduce using rule 52 (int_factor -> NUM .)
+    ADD             reduce using rule 52 (int_factor -> NUM .)
+    SUB             reduce using rule 52 (int_factor -> NUM .)
+    AND             reduce using rule 52 (int_factor -> NUM .)
+    OR              reduce using rule 52 (int_factor -> NUM .)
+    SEMICOLON       reduce using rule 52 (int_factor -> NUM .)
+    ELSE            reduce using rule 52 (int_factor -> NUM .)
+    DO              reduce using rule 52 (int_factor -> NUM .)
+    THEN            reduce using rule 52 (int_factor -> NUM .)
+    RPAR            reduce using rule 52 (int_factor -> NUM .)
+    COMMA           reduce using rule 52 (int_factor -> NUM .)
+
+
+state 40
 
     (47) int_term -> int_factor .
 
@@ -668,13 +748,40 @@ state 34
     OR              reduce using rule 47 (int_term -> int_factor .)
     COMMA           reduce using rule 47 (int_term -> int_factor .)
     RPAR            reduce using rule 47 (int_term -> int_factor .)
-    THEN            reduce using rule 47 (int_term -> int_factor .)
+    DO              reduce using rule 47 (int_term -> int_factor .)
     SEMICOLON       reduce using rule 47 (int_term -> int_factor .)
     ELSE            reduce using rule 47 (int_term -> int_factor .)
-    DO              reduce using rule 47 (int_term -> int_factor .)
+    THEN            reduce using rule 47 (int_term -> int_factor .)
 
 
-state 35
+state 41
+
+    (51) int_factor -> ID . argument_list
+    (55) argument_list -> . LPAR arguments RPAR
+    (56) argument_list -> .
+
+    LPAR            shift and go to state 72
+    MUL             reduce using rule 56 (argument_list -> .)
+    DIV             reduce using rule 56 (argument_list -> .)
+    EQUAL           reduce using rule 56 (argument_list -> .)
+    LT              reduce using rule 56 (argument_list -> .)
+    GT              reduce using rule 56 (argument_list -> .)
+    LE              reduce using rule 56 (argument_list -> .)
+    GE              reduce using rule 56 (argument_list -> .)
+    ADD             reduce using rule 56 (argument_list -> .)
+    SUB             reduce using rule 56 (argument_list -> .)
+    AND             reduce using rule 56 (argument_list -> .)
+    OR              reduce using rule 56 (argument_list -> .)
+    SEMICOLON       reduce using rule 56 (argument_list -> .)
+    ELSE            reduce using rule 56 (argument_list -> .)
+    DO              reduce using rule 56 (argument_list -> .)
+    THEN            reduce using rule 56 (argument_list -> .)
+    RPAR            reduce using rule 56 (argument_list -> .)
+    COMMA           reduce using rule 56 (argument_list -> .)
+
+    argument_list                  shift and go to state 73
+
+state 42
 
     (50) int_factor -> LPAR . expr RPAR
     (30) expr -> . expr OR bint_term
@@ -694,48 +801,35 @@ state 35
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 30
-    expr                           shift and go to state 67
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
-    bint_term                      shift and go to state 39
-    int_term                       shift and go to state 38
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    expr                           shift and go to state 74
+    int_factor                     shift and go to state 40
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 45
 
-state 36
+state 43
 
-    (51) int_factor -> ID . argument_list
-    (55) argument_list -> . LPAR arguments RPAR
-    (56) argument_list -> .
+    (33) bint_term -> bint_factor .
 
-    LPAR            shift and go to state 68
-    MUL             reduce using rule 56 (argument_list -> .)
-    DIV             reduce using rule 56 (argument_list -> .)
-    EQUAL           reduce using rule 56 (argument_list -> .)
-    LT              reduce using rule 56 (argument_list -> .)
-    GT              reduce using rule 56 (argument_list -> .)
-    LE              reduce using rule 56 (argument_list -> .)
-    GE              reduce using rule 56 (argument_list -> .)
-    ADD             reduce using rule 56 (argument_list -> .)
-    SUB             reduce using rule 56 (argument_list -> .)
-    AND             reduce using rule 56 (argument_list -> .)
-    THEN            reduce using rule 56 (argument_list -> .)
-    OR              reduce using rule 56 (argument_list -> .)
-    SEMICOLON       reduce using rule 56 (argument_list -> .)
-    ELSE            reduce using rule 56 (argument_list -> .)
-    DO              reduce using rule 56 (argument_list -> .)
-    RPAR            reduce using rule 56 (argument_list -> .)
-    COMMA           reduce using rule 56 (argument_list -> .)
+    AND             reduce using rule 33 (bint_term -> bint_factor .)
+    OR              reduce using rule 33 (bint_term -> bint_factor .)
+    SEMICOLON       reduce using rule 33 (bint_term -> bint_factor .)
+    ELSE            reduce using rule 33 (bint_term -> bint_factor .)
+    COMMA           reduce using rule 33 (bint_term -> bint_factor .)
+    RPAR            reduce using rule 33 (bint_term -> bint_factor .)
+    DO              reduce using rule 33 (bint_term -> bint_factor .)
+    THEN            reduce using rule 33 (bint_term -> bint_factor .)
 
-    argument_list                  shift and go to state 69
 
-state 37
+state 44
 
     (54) int_factor -> SUB . int_factor
     (50) int_factor -> . LPAR expr RPAR
@@ -744,80 +838,47 @@ state 37
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    int_factor                     shift and go to state 70
+    int_factor                     shift and go to state 75
 
-state 38
-
-    (43) int_expr -> int_term .
-    (46) int_term -> int_term . mulop int_factor
-    (48) mulop -> . MUL
-    (49) mulop -> . DIV
-
-    EQUAL           reduce using rule 43 (int_expr -> int_term .)
-    LT              reduce using rule 43 (int_expr -> int_term .)
-    GT              reduce using rule 43 (int_expr -> int_term .)
-    LE              reduce using rule 43 (int_expr -> int_term .)
-    GE              reduce using rule 43 (int_expr -> int_term .)
-    ADD             reduce using rule 43 (int_expr -> int_term .)
-    SUB             reduce using rule 43 (int_expr -> int_term .)
-    AND             reduce using rule 43 (int_expr -> int_term .)
-    THEN            reduce using rule 43 (int_expr -> int_term .)
-    OR              reduce using rule 43 (int_expr -> int_term .)
-    SEMICOLON       reduce using rule 43 (int_expr -> int_term .)
-    ELSE            reduce using rule 43 (int_expr -> int_term .)
-    DO              reduce using rule 43 (int_expr -> int_term .)
-    RPAR            reduce using rule 43 (int_expr -> int_term .)
-    COMMA           reduce using rule 43 (int_expr -> int_term .)
-    MUL             shift and go to state 73
-    DIV             shift and go to state 71
-
-    mulop                          shift and go to state 72
-
-state 39
+state 45
 
     (31) expr -> bint_term .
     (32) bint_term -> bint_term . AND bint_factor
 
+    RPAR            reduce using rule 31 (expr -> bint_term .)
     OR              reduce using rule 31 (expr -> bint_term .)
+    THEN            reduce using rule 31 (expr -> bint_term .)
     SEMICOLON       reduce using rule 31 (expr -> bint_term .)
     ELSE            reduce using rule 31 (expr -> bint_term .)
-    DO              reduce using rule 31 (expr -> bint_term .)
     COMMA           reduce using rule 31 (expr -> bint_term .)
-    RPAR            reduce using rule 31 (expr -> bint_term .)
-    THEN            reduce using rule 31 (expr -> bint_term .)
-    AND             shift and go to state 74
+    DO              reduce using rule 31 (expr -> bint_term .)
+    AND             shift and go to state 76
 
 
-state 40
+state 46
 
-    (52) int_factor -> NUM .
+    (25) prog_stmt -> WHILE expr . DO prog_stmt
+    (30) expr -> expr . OR bint_term
 
-    MUL             reduce using rule 52 (int_factor -> NUM .)
-    DIV             reduce using rule 52 (int_factor -> NUM .)
-    EQUAL           reduce using rule 52 (int_factor -> NUM .)
-    LT              reduce using rule 52 (int_factor -> NUM .)
-    GT              reduce using rule 52 (int_factor -> NUM .)
-    LE              reduce using rule 52 (int_factor -> NUM .)
-    GE              reduce using rule 52 (int_factor -> NUM .)
-    ADD             reduce using rule 52 (int_factor -> NUM .)
-    SUB             reduce using rule 52 (int_factor -> NUM .)
-    AND             reduce using rule 52 (int_factor -> NUM .)
-    OR              reduce using rule 52 (int_factor -> NUM .)
-    SEMICOLON       reduce using rule 52 (int_factor -> NUM .)
-    ELSE            reduce using rule 52 (int_factor -> NUM .)
-    THEN            reduce using rule 52 (int_factor -> NUM .)
-    DO              reduce using rule 52 (int_factor -> NUM .)
-    RPAR            reduce using rule 52 (int_factor -> NUM .)
-    COMMA           reduce using rule 52 (int_factor -> NUM .)
+    DO              shift and go to state 77
+    OR              shift and go to state 70
 
 
-state 41
+state 47
+
+    (26) prog_stmt -> READ ID .
+
+    SEMICOLON       reduce using rule 26 (prog_stmt -> READ ID .)
+    ELSE            reduce using rule 26 (prog_stmt -> READ ID .)
+
+
+state 48
 
     (27) prog_stmt -> ID ASSIGN . expr
     (30) expr -> . expr OR bint_term
@@ -837,98 +898,46 @@ state 41
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 30
-    expr                           shift and go to state 75
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
-    bint_term                      shift and go to state 39
-    int_term                       shift and go to state 38
-
-state 42
-
-    (29) prog_stmt -> CLPAR block . CRPAR
-
-    CRPAR           shift and go to state 76
-
-
-state 43
-
-    (28) prog_stmt -> PRINT expr .
-    (30) expr -> expr . OR bint_term
-
-    SEMICOLON       reduce using rule 28 (prog_stmt -> PRINT expr .)
-    ELSE            reduce using rule 28 (prog_stmt -> PRINT expr .)
-    OR              shift and go to state 66
-
-
-state 44
-
-    (19) program_body -> BEGIN prog_stmts END .
-
-    $end            reduce using rule 19 (program_body -> BEGIN prog_stmts END .)
-    CRPAR           reduce using rule 19 (program_body -> BEGIN prog_stmts END .)
-
-
-state 45
-
-    (25) prog_stmt -> WHILE expr . DO prog_stmt
-    (30) expr -> expr . OR bint_term
-
-    DO              shift and go to state 77
-    OR              shift and go to state 66
-
-
-state 46
-
-    (26) prog_stmt -> READ ID .
-
-    SEMICOLON       reduce using rule 26 (prog_stmt -> READ ID .)
-    ELSE            reduce using rule 26 (prog_stmt -> READ ID .)
-
-
-state 47
-
-    (9) fun_declaration -> FUN identifier param_list COLON . type CLPAR fun_block CRPAR
-    (17) type -> . INT
-    (18) type -> . BOOL
-
-    INT             shift and go to state 51
-    BOOL            shift and go to state 52
-
-    type                           shift and go to state 78
-
-state 48
-
-    (12) parameters -> parameters1 .
-    (14) parameters1 -> parameters1 . COMMA basic_var_declaration
-
-    RPAR            reduce using rule 12 (parameters -> parameters1 .)
-    COMMA           shift and go to state 79
-
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    expr                           shift and go to state 78
+    int_factor                     shift and go to state 40
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 45
 
 state 49
 
-    (11) param_list -> LPAR parameters . RPAR
+    (24) prog_stmt -> IF expr . THEN prog_stmt ELSE prog_stmt
+    (30) expr -> expr . OR bint_term
 
-    RPAR            shift and go to state 80
+    THEN            shift and go to state 79
+    OR              shift and go to state 70
 
 
 state 50
 
-    (15) parameters1 -> basic_var_declaration .
+    (29) prog_stmt -> CLPAR block . CRPAR
 
-    COMMA           reduce using rule 15 (parameters1 -> basic_var_declaration .)
-    RPAR            reduce using rule 15 (parameters1 -> basic_var_declaration .)
+    CRPAR           shift and go to state 80
 
 
 state 51
+
+    (8) basic_var_declaration -> identifier COLON type .
+
+    COMMA           reduce using rule 8 (basic_var_declaration -> identifier COLON type .)
+    RPAR            reduce using rule 8 (basic_var_declaration -> identifier COLON type .)
+    SEMICOLON       reduce using rule 8 (basic_var_declaration -> identifier COLON type .)
+
+
+state 52
 
     (17) type -> INT .
 
@@ -938,7 +947,7 @@ state 51
     CLPAR           reduce using rule 17 (type -> INT .)
 
 
-state 52
+state 53
 
     (18) type -> BOOL .
 
@@ -948,38 +957,132 @@ state 52
     CLPAR           reduce using rule 18 (type -> BOOL .)
 
 
-state 53
-
-    (8) basic_var_declaration -> identifier COLON type .
-
-    COMMA           reduce using rule 8 (basic_var_declaration -> identifier COLON type .)
-    RPAR            reduce using rule 8 (basic_var_declaration -> identifier COLON type .)
-    SEMICOLON       reduce using rule 8 (basic_var_declaration -> identifier COLON type .)
-
-
 state 54
 
-    (22) prog_stmts -> prog_stmt SEMICOLON prog_stmts .
+    (11) param_list -> LPAR parameters RPAR .
 
-    RETURN          reduce using rule 22 (prog_stmts -> prog_stmt SEMICOLON prog_stmts .)
-    END             reduce using rule 22 (prog_stmts -> prog_stmt SEMICOLON prog_stmts .)
+    COLON           reduce using rule 11 (param_list -> LPAR parameters RPAR .)
 
 
 state 55
 
-    (34) bint_factor -> NOT bint_factor .
+    (14) parameters1 -> parameters1 COMMA . basic_var_declaration
+    (8) basic_var_declaration -> . identifier COLON type
+    (16) identifier -> . ID
 
-    AND             reduce using rule 34 (bint_factor -> NOT bint_factor .)
-    RPAR            reduce using rule 34 (bint_factor -> NOT bint_factor .)
-    OR              reduce using rule 34 (bint_factor -> NOT bint_factor .)
-    THEN            reduce using rule 34 (bint_factor -> NOT bint_factor .)
-    SEMICOLON       reduce using rule 34 (bint_factor -> NOT bint_factor .)
-    ELSE            reduce using rule 34 (bint_factor -> NOT bint_factor .)
-    DO              reduce using rule 34 (bint_factor -> NOT bint_factor .)
-    COMMA           reduce using rule 34 (bint_factor -> NOT bint_factor .)
+    ID              shift and go to state 9
 
+    basic_var_declaration          shift and go to state 81
+    identifier                     shift and go to state 14
 
 state 56
+
+    (9) fun_declaration -> FUN identifier param_list COLON type . CLPAR fun_block CRPAR
+
+    CLPAR           shift and go to state 82
+
+
+state 57
+
+    (22) prog_stmts -> prog_stmt SEMICOLON prog_stmts .
+
+    END             reduce using rule 22 (prog_stmts -> prog_stmt SEMICOLON prog_stmts .)
+    RETURN          reduce using rule 22 (prog_stmts -> prog_stmt SEMICOLON prog_stmts .)
+
+
+state 58
+
+    (46) int_term -> int_term mulop . int_factor
+    (50) int_factor -> . LPAR expr RPAR
+    (51) int_factor -> . ID argument_list
+    (52) int_factor -> . NUM
+    (53) int_factor -> . BVAL
+    (54) int_factor -> . SUB int_factor
+
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
+
+    int_factor                     shift and go to state 83
+
+state 59
+
+    (49) mulop -> DIV .
+
+    LPAR            reduce using rule 49 (mulop -> DIV .)
+    ID              reduce using rule 49 (mulop -> DIV .)
+    NUM             reduce using rule 49 (mulop -> DIV .)
+    BVAL            reduce using rule 49 (mulop -> DIV .)
+    SUB             reduce using rule 49 (mulop -> DIV .)
+
+
+state 60
+
+    (48) mulop -> MUL .
+
+    LPAR            reduce using rule 48 (mulop -> MUL .)
+    ID              reduce using rule 48 (mulop -> MUL .)
+    NUM             reduce using rule 48 (mulop -> MUL .)
+    BVAL            reduce using rule 48 (mulop -> MUL .)
+    SUB             reduce using rule 48 (mulop -> MUL .)
+
+
+state 61
+
+    (42) int_expr -> int_expr addop . int_term
+    (46) int_term -> . int_term mulop int_factor
+    (47) int_term -> . int_factor
+    (50) int_factor -> . LPAR expr RPAR
+    (51) int_factor -> . ID argument_list
+    (52) int_factor -> . NUM
+    (53) int_factor -> . BVAL
+    (54) int_factor -> . SUB int_factor
+
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
+
+    int_term                       shift and go to state 84
+    int_factor                     shift and go to state 40
+
+state 62
+
+    (37) compare_op -> EQUAL .
+
+    LPAR            reduce using rule 37 (compare_op -> EQUAL .)
+    ID              reduce using rule 37 (compare_op -> EQUAL .)
+    NUM             reduce using rule 37 (compare_op -> EQUAL .)
+    BVAL            reduce using rule 37 (compare_op -> EQUAL .)
+    SUB             reduce using rule 37 (compare_op -> EQUAL .)
+
+
+state 63
+
+    (40) compare_op -> LE .
+
+    LPAR            reduce using rule 40 (compare_op -> LE .)
+    ID              reduce using rule 40 (compare_op -> LE .)
+    NUM             reduce using rule 40 (compare_op -> LE .)
+    BVAL            reduce using rule 40 (compare_op -> LE .)
+    SUB             reduce using rule 40 (compare_op -> LE .)
+
+
+state 64
+
+    (41) compare_op -> GE .
+
+    LPAR            reduce using rule 41 (compare_op -> GE .)
+    ID              reduce using rule 41 (compare_op -> GE .)
+    NUM             reduce using rule 41 (compare_op -> GE .)
+    BVAL            reduce using rule 41 (compare_op -> GE .)
+    SUB             reduce using rule 41 (compare_op -> GE .)
+
+
+state 65
 
     (35) bint_factor -> int_expr compare_op . int_expr
     (42) int_expr -> . int_expr addop int_term
@@ -992,92 +1095,17 @@ state 56
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    int_term                       shift and go to state 38
-    int_expr                       shift and go to state 81
-    int_factor                     shift and go to state 34
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 85
+    int_factor                     shift and go to state 40
 
-state 57
-
-    (42) int_expr -> int_expr addop . int_term
-    (46) int_term -> . int_term mulop int_factor
-    (47) int_term -> . int_factor
-    (50) int_factor -> . LPAR expr RPAR
-    (51) int_factor -> . ID argument_list
-    (52) int_factor -> . NUM
-    (53) int_factor -> . BVAL
-    (54) int_factor -> . SUB int_factor
-
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
-
-    int_term                       shift and go to state 82
-    int_factor                     shift and go to state 34
-
-state 58
-
-    (39) compare_op -> GT .
-
-    LPAR            reduce using rule 39 (compare_op -> GT .)
-    ID              reduce using rule 39 (compare_op -> GT .)
-    NUM             reduce using rule 39 (compare_op -> GT .)
-    BVAL            reduce using rule 39 (compare_op -> GT .)
-    SUB             reduce using rule 39 (compare_op -> GT .)
-
-
-state 59
-
-    (45) addop -> SUB .
-
-    LPAR            reduce using rule 45 (addop -> SUB .)
-    ID              reduce using rule 45 (addop -> SUB .)
-    NUM             reduce using rule 45 (addop -> SUB .)
-    BVAL            reduce using rule 45 (addop -> SUB .)
-    SUB             reduce using rule 45 (addop -> SUB .)
-
-
-state 60
-
-    (41) compare_op -> GE .
-
-    LPAR            reduce using rule 41 (compare_op -> GE .)
-    ID              reduce using rule 41 (compare_op -> GE .)
-    NUM             reduce using rule 41 (compare_op -> GE .)
-    BVAL            reduce using rule 41 (compare_op -> GE .)
-    SUB             reduce using rule 41 (compare_op -> GE .)
-
-
-state 61
-
-    (37) compare_op -> EQUAL .
-
-    LPAR            reduce using rule 37 (compare_op -> EQUAL .)
-    ID              reduce using rule 37 (compare_op -> EQUAL .)
-    NUM             reduce using rule 37 (compare_op -> EQUAL .)
-    BVAL            reduce using rule 37 (compare_op -> EQUAL .)
-    SUB             reduce using rule 37 (compare_op -> EQUAL .)
-
-
-state 62
-
-    (40) compare_op -> LE .
-
-    LPAR            reduce using rule 40 (compare_op -> LE .)
-    ID              reduce using rule 40 (compare_op -> LE .)
-    NUM             reduce using rule 40 (compare_op -> LE .)
-    BVAL            reduce using rule 40 (compare_op -> LE .)
-    SUB             reduce using rule 40 (compare_op -> LE .)
-
-
-state 63
+state 66
 
     (44) addop -> ADD .
 
@@ -1088,7 +1116,7 @@ state 63
     SUB             reduce using rule 44 (addop -> ADD .)
 
 
-state 64
+state 67
 
     (38) compare_op -> LT .
 
@@ -1099,26 +1127,29 @@ state 64
     SUB             reduce using rule 38 (compare_op -> LT .)
 
 
-state 65
+state 68
 
-    (24) prog_stmt -> IF expr THEN . prog_stmt ELSE prog_stmt
-    (24) prog_stmt -> . IF expr THEN prog_stmt ELSE prog_stmt
-    (25) prog_stmt -> . WHILE expr DO prog_stmt
-    (26) prog_stmt -> . READ ID
-    (27) prog_stmt -> . ID ASSIGN expr
-    (28) prog_stmt -> . PRINT expr
-    (29) prog_stmt -> . CLPAR block CRPAR
+    (45) addop -> SUB .
 
-    IF              shift and go to state 17
-    WHILE           shift and go to state 22
-    READ            shift and go to state 23
-    ID              shift and go to state 18
-    PRINT           shift and go to state 20
-    CLPAR           shift and go to state 19
+    LPAR            reduce using rule 45 (addop -> SUB .)
+    ID              reduce using rule 45 (addop -> SUB .)
+    NUM             reduce using rule 45 (addop -> SUB .)
+    BVAL            reduce using rule 45 (addop -> SUB .)
+    SUB             reduce using rule 45 (addop -> SUB .)
 
-    prog_stmt                      shift and go to state 83
 
-state 66
+state 69
+
+    (39) compare_op -> GT .
+
+    LPAR            reduce using rule 39 (compare_op -> GT .)
+    ID              reduce using rule 39 (compare_op -> GT .)
+    NUM             reduce using rule 39 (compare_op -> GT .)
+    BVAL            reduce using rule 39 (compare_op -> GT .)
+    SUB             reduce using rule 39 (compare_op -> GT .)
+
+
+state 70
 
     (30) expr -> expr OR . bint_term
     (32) bint_term -> . bint_term AND bint_factor
@@ -1136,29 +1167,34 @@ state 66
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 30
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
-    bint_term                      shift and go to state 84
-    int_term                       shift and go to state 38
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    int_factor                     shift and go to state 40
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 86
 
-state 67
+state 71
 
-    (50) int_factor -> LPAR expr . RPAR
-    (30) expr -> expr . OR bint_term
+    (34) bint_factor -> NOT bint_factor .
 
-    RPAR            shift and go to state 85
-    OR              shift and go to state 66
+    AND             reduce using rule 34 (bint_factor -> NOT bint_factor .)
+    OR              reduce using rule 34 (bint_factor -> NOT bint_factor .)
+    SEMICOLON       reduce using rule 34 (bint_factor -> NOT bint_factor .)
+    ELSE            reduce using rule 34 (bint_factor -> NOT bint_factor .)
+    DO              reduce using rule 34 (bint_factor -> NOT bint_factor .)
+    THEN            reduce using rule 34 (bint_factor -> NOT bint_factor .)
+    RPAR            reduce using rule 34 (bint_factor -> NOT bint_factor .)
+    COMMA           reduce using rule 34 (bint_factor -> NOT bint_factor .)
 
 
-state 68
+state 72
 
     (55) argument_list -> LPAR . arguments RPAR
     (57) arguments -> . arguments1
@@ -1183,23 +1219,23 @@ state 68
     (54) int_factor -> . SUB int_factor
 
     RPAR            reduce using rule 58 (arguments -> .)
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 30
-    int_expr                       shift and go to state 32
-    arguments                      shift and go to state 86
-    int_factor                     shift and go to state 34
-    expr                           shift and go to state 87
+    arguments                      shift and go to state 87
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    expr                           shift and go to state 89
+    int_factor                     shift and go to state 40
     arguments1                     shift and go to state 88
-    bint_term                      shift and go to state 39
-    int_term                       shift and go to state 38
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 45
 
-state 69
+state 73
 
     (51) int_factor -> ID argument_list .
 
@@ -1216,13 +1252,22 @@ state 69
     OR              reduce using rule 51 (int_factor -> ID argument_list .)
     SEMICOLON       reduce using rule 51 (int_factor -> ID argument_list .)
     ELSE            reduce using rule 51 (int_factor -> ID argument_list .)
-    THEN            reduce using rule 51 (int_factor -> ID argument_list .)
     DO              reduce using rule 51 (int_factor -> ID argument_list .)
+    THEN            reduce using rule 51 (int_factor -> ID argument_list .)
     RPAR            reduce using rule 51 (int_factor -> ID argument_list .)
     COMMA           reduce using rule 51 (int_factor -> ID argument_list .)
 
 
-state 70
+state 74
+
+    (50) int_factor -> LPAR expr . RPAR
+    (30) expr -> expr . OR bint_term
+
+    RPAR            shift and go to state 90
+    OR              shift and go to state 70
+
+
+state 75
 
     (54) int_factor -> SUB int_factor .
 
@@ -1239,52 +1284,13 @@ state 70
     OR              reduce using rule 54 (int_factor -> SUB int_factor .)
     SEMICOLON       reduce using rule 54 (int_factor -> SUB int_factor .)
     ELSE            reduce using rule 54 (int_factor -> SUB int_factor .)
-    THEN            reduce using rule 54 (int_factor -> SUB int_factor .)
     DO              reduce using rule 54 (int_factor -> SUB int_factor .)
+    THEN            reduce using rule 54 (int_factor -> SUB int_factor .)
     RPAR            reduce using rule 54 (int_factor -> SUB int_factor .)
     COMMA           reduce using rule 54 (int_factor -> SUB int_factor .)
 
 
-state 71
-
-    (49) mulop -> DIV .
-
-    LPAR            reduce using rule 49 (mulop -> DIV .)
-    ID              reduce using rule 49 (mulop -> DIV .)
-    NUM             reduce using rule 49 (mulop -> DIV .)
-    BVAL            reduce using rule 49 (mulop -> DIV .)
-    SUB             reduce using rule 49 (mulop -> DIV .)
-
-
-state 72
-
-    (46) int_term -> int_term mulop . int_factor
-    (50) int_factor -> . LPAR expr RPAR
-    (51) int_factor -> . ID argument_list
-    (52) int_factor -> . NUM
-    (53) int_factor -> . BVAL
-    (54) int_factor -> . SUB int_factor
-
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
-
-    int_factor                     shift and go to state 89
-
-state 73
-
-    (48) mulop -> MUL .
-
-    LPAR            reduce using rule 48 (mulop -> MUL .)
-    ID              reduce using rule 48 (mulop -> MUL .)
-    NUM             reduce using rule 48 (mulop -> MUL .)
-    BVAL            reduce using rule 48 (mulop -> MUL .)
-    SUB             reduce using rule 48 (mulop -> MUL .)
-
-
-state 74
+state 76
 
     (32) bint_term -> bint_term AND . bint_factor
     (34) bint_factor -> . NOT bint_factor
@@ -1300,35 +1306,17 @@ state 74
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 90
-    int_term                       shift and go to state 38
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
-
-state 75
-
-    (27) prog_stmt -> ID ASSIGN expr .
-    (30) expr -> expr . OR bint_term
-
-    SEMICOLON       reduce using rule 27 (prog_stmt -> ID ASSIGN expr .)
-    ELSE            reduce using rule 27 (prog_stmt -> ID ASSIGN expr .)
-    OR              shift and go to state 66
-
-
-state 76
-
-    (29) prog_stmt -> CLPAR block CRPAR .
-
-    SEMICOLON       reduce using rule 29 (prog_stmt -> CLPAR block CRPAR .)
-    ELSE            reduce using rule 29 (prog_stmt -> CLPAR block CRPAR .)
-
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    int_factor                     shift and go to state 40
+    bint_factor                    shift and go to state 91
 
 state 77
 
@@ -1340,204 +1328,61 @@ state 77
     (28) prog_stmt -> . PRINT expr
     (29) prog_stmt -> . CLPAR block CRPAR
 
-    IF              shift and go to state 17
+    IF              shift and go to state 25
     WHILE           shift and go to state 22
     READ            shift and go to state 23
-    ID              shift and go to state 18
-    PRINT           shift and go to state 20
-    CLPAR           shift and go to state 19
+    ID              shift and go to state 24
+    PRINT           shift and go to state 21
+    CLPAR           shift and go to state 26
 
-    prog_stmt                      shift and go to state 91
+    prog_stmt                      shift and go to state 92
 
 state 78
 
-    (9) fun_declaration -> FUN identifier param_list COLON type . CLPAR fun_block CRPAR
+    (27) prog_stmt -> ID ASSIGN expr .
+    (30) expr -> expr . OR bint_term
 
-    CLPAR           shift and go to state 92
+    SEMICOLON       reduce using rule 27 (prog_stmt -> ID ASSIGN expr .)
+    ELSE            reduce using rule 27 (prog_stmt -> ID ASSIGN expr .)
+    OR              shift and go to state 70
 
 
 state 79
 
-    (14) parameters1 -> parameters1 COMMA . basic_var_declaration
-    (8) basic_var_declaration -> . identifier COLON type
-    (16) identifier -> . ID
+    (24) prog_stmt -> IF expr THEN . prog_stmt ELSE prog_stmt
+    (24) prog_stmt -> . IF expr THEN prog_stmt ELSE prog_stmt
+    (25) prog_stmt -> . WHILE expr DO prog_stmt
+    (26) prog_stmt -> . READ ID
+    (27) prog_stmt -> . ID ASSIGN expr
+    (28) prog_stmt -> . PRINT expr
+    (29) prog_stmt -> . CLPAR block CRPAR
 
-    ID              shift and go to state 12
+    IF              shift and go to state 25
+    WHILE           shift and go to state 22
+    READ            shift and go to state 23
+    ID              shift and go to state 24
+    PRINT           shift and go to state 21
+    CLPAR           shift and go to state 26
 
-    basic_var_declaration          shift and go to state 93
-    identifier                     shift and go to state 15
+    prog_stmt                      shift and go to state 93
 
 state 80
 
-    (11) param_list -> LPAR parameters RPAR .
+    (29) prog_stmt -> CLPAR block CRPAR .
 
-    COLON           reduce using rule 11 (param_list -> LPAR parameters RPAR .)
+    SEMICOLON       reduce using rule 29 (prog_stmt -> CLPAR block CRPAR .)
+    ELSE            reduce using rule 29 (prog_stmt -> CLPAR block CRPAR .)
 
 
 state 81
 
-    (35) bint_factor -> int_expr compare_op int_expr .
-    (42) int_expr -> int_expr . addop int_term
-    (44) addop -> . ADD
-    (45) addop -> . SUB
+    (14) parameters1 -> parameters1 COMMA basic_var_declaration .
 
-    AND             reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
-    RPAR            reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
-    OR              reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
-    THEN            reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
-    SEMICOLON       reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
-    ELSE            reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
-    DO              reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
-    COMMA           reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
-    ADD             shift and go to state 63
-    SUB             shift and go to state 59
+    COMMA           reduce using rule 14 (parameters1 -> parameters1 COMMA basic_var_declaration .)
+    RPAR            reduce using rule 14 (parameters1 -> parameters1 COMMA basic_var_declaration .)
 
-    addop                          shift and go to state 57
 
 state 82
-
-    (42) int_expr -> int_expr addop int_term .
-    (46) int_term -> int_term . mulop int_factor
-    (48) mulop -> . MUL
-    (49) mulop -> . DIV
-
-    EQUAL           reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    LT              reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    GT              reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    LE              reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    GE              reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    ADD             reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    SUB             reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    AND             reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    THEN            reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    OR              reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    SEMICOLON       reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    ELSE            reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    DO              reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    RPAR            reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    COMMA           reduce using rule 42 (int_expr -> int_expr addop int_term .)
-    MUL             shift and go to state 73
-    DIV             shift and go to state 71
-
-    mulop                          shift and go to state 72
-
-state 83
-
-    (24) prog_stmt -> IF expr THEN prog_stmt . ELSE prog_stmt
-
-    ELSE            shift and go to state 94
-
-
-state 84
-
-    (30) expr -> expr OR bint_term .
-    (32) bint_term -> bint_term . AND bint_factor
-
-    OR              reduce using rule 30 (expr -> expr OR bint_term .)
-    SEMICOLON       reduce using rule 30 (expr -> expr OR bint_term .)
-    ELSE            reduce using rule 30 (expr -> expr OR bint_term .)
-    DO              reduce using rule 30 (expr -> expr OR bint_term .)
-    COMMA           reduce using rule 30 (expr -> expr OR bint_term .)
-    RPAR            reduce using rule 30 (expr -> expr OR bint_term .)
-    THEN            reduce using rule 30 (expr -> expr OR bint_term .)
-    AND             shift and go to state 74
-
-
-state 85
-
-    (50) int_factor -> LPAR expr RPAR .
-
-    MUL             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    DIV             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    EQUAL           reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    LT              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    GT              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    LE              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    GE              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    ADD             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    SUB             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    AND             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    OR              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    SEMICOLON       reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    ELSE            reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    THEN            reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    DO              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    RPAR            reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-    COMMA           reduce using rule 50 (int_factor -> LPAR expr RPAR .)
-
-
-state 86
-
-    (55) argument_list -> LPAR arguments . RPAR
-
-    RPAR            shift and go to state 95
-
-
-state 87
-
-    (60) arguments1 -> expr .
-    (30) expr -> expr . OR bint_term
-
-    COMMA           reduce using rule 60 (arguments1 -> expr .)
-    RPAR            reduce using rule 60 (arguments1 -> expr .)
-    OR              shift and go to state 66
-
-
-state 88
-
-    (57) arguments -> arguments1 .
-    (59) arguments1 -> arguments1 . COMMA expr
-
-    RPAR            reduce using rule 57 (arguments -> arguments1 .)
-    COMMA           shift and go to state 96
-
-
-state 89
-
-    (46) int_term -> int_term mulop int_factor .
-
-    MUL             reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    DIV             reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    EQUAL           reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    LT              reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    GT              reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    LE              reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    GE              reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    ADD             reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    SUB             reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    AND             reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    OR              reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    COMMA           reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    RPAR            reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    THEN            reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    SEMICOLON       reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    ELSE            reduce using rule 46 (int_term -> int_term mulop int_factor .)
-    DO              reduce using rule 46 (int_term -> int_term mulop int_factor .)
-
-
-state 90
-
-    (32) bint_term -> bint_term AND bint_factor .
-
-    AND             reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
-    THEN            reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
-    OR              reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
-    SEMICOLON       reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
-    ELSE            reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
-    DO              reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
-    RPAR            reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
-    COMMA           reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
-
-
-state 91
-
-    (25) prog_stmt -> WHILE expr DO prog_stmt .
-
-    SEMICOLON       reduce using rule 25 (prog_stmt -> WHILE expr DO prog_stmt .)
-    ELSE            reduce using rule 25 (prog_stmt -> WHILE expr DO prog_stmt .)
-
-
-state 92
 
     (9) fun_declaration -> FUN identifier param_list COLON type CLPAR . fun_block CRPAR
     (10) fun_block -> . declarations fun_body
@@ -1557,25 +1402,191 @@ state 92
     CLPAR           reduce using rule 4 (declarations -> .)
     RETURN          reduce using rule 4 (declarations -> .)
     VAR             shift and go to state 8
-    FUN             shift and go to state 6
+    FUN             shift and go to state 2
 
-    var_declaration                shift and go to state 1
-    declarations                   shift and go to state 97
-    fun_block                      shift and go to state 98
+    fun_block                      shift and go to state 94
+    fun_declaration                shift and go to state 3
+    declarations                   shift and go to state 95
+    var_declaration                shift and go to state 7
     declaration                    shift and go to state 5
-    fun_declaration                shift and go to state 7
+
+state 83
+
+    (46) int_term -> int_term mulop int_factor .
+
+    MUL             reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    DIV             reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    EQUAL           reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    LT              reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    GT              reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    LE              reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    GE              reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    ADD             reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    SUB             reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    AND             reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    OR              reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    COMMA           reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    RPAR            reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    DO              reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    SEMICOLON       reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    ELSE            reduce using rule 46 (int_term -> int_term mulop int_factor .)
+    THEN            reduce using rule 46 (int_term -> int_term mulop int_factor .)
+
+
+state 84
+
+    (42) int_expr -> int_expr addop int_term .
+    (46) int_term -> int_term . mulop int_factor
+    (48) mulop -> . MUL
+    (49) mulop -> . DIV
+
+    EQUAL           reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    LT              reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    GT              reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    LE              reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    GE              reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    ADD             reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    SUB             reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    AND             reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    SEMICOLON       reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    OR              reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    ELSE            reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    DO              reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    THEN            reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    RPAR            reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    COMMA           reduce using rule 42 (int_expr -> int_expr addop int_term .)
+    MUL             shift and go to state 60
+    DIV             shift and go to state 59
+
+    mulop                          shift and go to state 58
+
+state 85
+
+    (35) bint_factor -> int_expr compare_op int_expr .
+    (42) int_expr -> int_expr . addop int_term
+    (44) addop -> . ADD
+    (45) addop -> . SUB
+
+    AND             reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
+    OR              reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
+    SEMICOLON       reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
+    ELSE            reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
+    DO              reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
+    THEN            reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
+    RPAR            reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
+    COMMA           reduce using rule 35 (bint_factor -> int_expr compare_op int_expr .)
+    ADD             shift and go to state 66
+    SUB             shift and go to state 68
+
+    addop                          shift and go to state 61
+
+state 86
+
+    (30) expr -> expr OR bint_term .
+    (32) bint_term -> bint_term . AND bint_factor
+
+    RPAR            reduce using rule 30 (expr -> expr OR bint_term .)
+    OR              reduce using rule 30 (expr -> expr OR bint_term .)
+    THEN            reduce using rule 30 (expr -> expr OR bint_term .)
+    SEMICOLON       reduce using rule 30 (expr -> expr OR bint_term .)
+    ELSE            reduce using rule 30 (expr -> expr OR bint_term .)
+    COMMA           reduce using rule 30 (expr -> expr OR bint_term .)
+    DO              reduce using rule 30 (expr -> expr OR bint_term .)
+    AND             shift and go to state 76
+
+
+state 87
+
+    (55) argument_list -> LPAR arguments . RPAR
+
+    RPAR            shift and go to state 96
+
+
+state 88
+
+    (57) arguments -> arguments1 .
+    (59) arguments1 -> arguments1 . COMMA expr
+
+    RPAR            reduce using rule 57 (arguments -> arguments1 .)
+    COMMA           shift and go to state 97
+
+
+state 89
+
+    (60) arguments1 -> expr .
+    (30) expr -> expr . OR bint_term
+
+    COMMA           reduce using rule 60 (arguments1 -> expr .)
+    RPAR            reduce using rule 60 (arguments1 -> expr .)
+    OR              shift and go to state 70
+
+
+state 90
+
+    (50) int_factor -> LPAR expr RPAR .
+
+    MUL             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    DIV             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    EQUAL           reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    LT              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    GT              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    LE              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    GE              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    ADD             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    SUB             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    AND             reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    OR              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    SEMICOLON       reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    ELSE            reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    DO              reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    THEN            reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    RPAR            reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+    COMMA           reduce using rule 50 (int_factor -> LPAR expr RPAR .)
+
+
+state 91
+
+    (32) bint_term -> bint_term AND bint_factor .
+
+    AND             reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
+    OR              reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
+    SEMICOLON       reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
+    ELSE            reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
+    COMMA           reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
+    RPAR            reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
+    DO              reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
+    THEN            reduce using rule 32 (bint_term -> bint_term AND bint_factor .)
+
+
+state 92
+
+    (25) prog_stmt -> WHILE expr DO prog_stmt .
+
+    SEMICOLON       reduce using rule 25 (prog_stmt -> WHILE expr DO prog_stmt .)
+    ELSE            reduce using rule 25 (prog_stmt -> WHILE expr DO prog_stmt .)
+
 
 state 93
 
-    (14) parameters1 -> parameters1 COMMA basic_var_declaration .
+    (24) prog_stmt -> IF expr THEN prog_stmt . ELSE prog_stmt
 
-    COMMA           reduce using rule 14 (parameters1 -> parameters1 COMMA basic_var_declaration .)
-    RPAR            reduce using rule 14 (parameters1 -> parameters1 COMMA basic_var_declaration .)
+    ELSE            shift and go to state 98
 
 
 state 94
 
-    (24) prog_stmt -> IF expr THEN prog_stmt ELSE . prog_stmt
+    (9) fun_declaration -> FUN identifier param_list COLON type CLPAR fun_block . CRPAR
+
+    CRPAR           shift and go to state 99
+
+
+state 95
+
+    (10) fun_block -> declarations . fun_body
+    (20) fun_body -> . BEGIN prog_stmts RETURN expr SEMICOLON END
+    (21) fun_body -> . prog_stmts RETURN expr SEMICOLON
+    (22) prog_stmts -> . prog_stmt SEMICOLON prog_stmts
+    (23) prog_stmts -> .
     (24) prog_stmt -> . IF expr THEN prog_stmt ELSE prog_stmt
     (25) prog_stmt -> . WHILE expr DO prog_stmt
     (26) prog_stmt -> . READ ID
@@ -1583,16 +1594,20 @@ state 94
     (28) prog_stmt -> . PRINT expr
     (29) prog_stmt -> . CLPAR block CRPAR
 
-    IF              shift and go to state 17
+    BEGIN           shift and go to state 100
+    RETURN          reduce using rule 23 (prog_stmts -> .)
+    IF              shift and go to state 25
     WHILE           shift and go to state 22
     READ            shift and go to state 23
-    ID              shift and go to state 18
-    PRINT           shift and go to state 20
-    CLPAR           shift and go to state 19
+    ID              shift and go to state 24
+    PRINT           shift and go to state 21
+    CLPAR           shift and go to state 26
 
-    prog_stmt                      shift and go to state 99
+    prog_stmt                      shift and go to state 19
+    fun_body                       shift and go to state 101
+    prog_stmts                     shift and go to state 102
 
-state 95
+state 96
 
     (55) argument_list -> LPAR arguments RPAR .
 
@@ -1606,16 +1621,16 @@ state 95
     ADD             reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
     SUB             reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
     AND             reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
-    THEN            reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
     OR              reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
     SEMICOLON       reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
     ELSE            reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
     DO              reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
+    THEN            reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
     RPAR            reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
     COMMA           reduce using rule 55 (argument_list -> LPAR arguments RPAR .)
 
 
-state 96
+state 97
 
     (59) arguments1 -> arguments1 COMMA . expr
     (30) expr -> . expr OR bint_term
@@ -1635,27 +1650,23 @@ state 96
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 30
-    expr                           shift and go to state 100
-    int_expr                       shift and go to state 32
-    int_term                       shift and go to state 38
-    int_factor                     shift and go to state 34
-    bint_term                      shift and go to state 39
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    expr                           shift and go to state 103
+    int_factor                     shift and go to state 40
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 45
 
-state 97
+state 98
 
-    (10) fun_block -> declarations . fun_body
-    (20) fun_body -> . BEGIN prog_stmts RETURN expr SEMICOLON END
-    (21) fun_body -> . prog_stmts RETURN expr SEMICOLON
-    (22) prog_stmts -> . prog_stmt SEMICOLON prog_stmts
-    (23) prog_stmts -> .
+    (24) prog_stmt -> IF expr THEN prog_stmt ELSE . prog_stmt
     (24) prog_stmt -> . IF expr THEN prog_stmt ELSE prog_stmt
     (25) prog_stmt -> . WHILE expr DO prog_stmt
     (26) prog_stmt -> . READ ID
@@ -1663,59 +1674,23 @@ state 97
     (28) prog_stmt -> . PRINT expr
     (29) prog_stmt -> . CLPAR block CRPAR
 
-    BEGIN           shift and go to state 103
-    RETURN          reduce using rule 23 (prog_stmts -> .)
-    IF              shift and go to state 17
+    IF              shift and go to state 25
     WHILE           shift and go to state 22
     READ            shift and go to state 23
-    ID              shift and go to state 18
-    PRINT           shift and go to state 20
-    CLPAR           shift and go to state 19
+    ID              shift and go to state 24
+    PRINT           shift and go to state 21
+    CLPAR           shift and go to state 26
 
-    prog_stmts                     shift and go to state 102
-    prog_stmt                      shift and go to state 16
-    fun_body                       shift and go to state 101
-
-state 98
-
-    (9) fun_declaration -> FUN identifier param_list COLON type CLPAR fun_block . CRPAR
-
-    CRPAR           shift and go to state 104
-
+    prog_stmt                      shift and go to state 104
 
 state 99
 
-    (24) prog_stmt -> IF expr THEN prog_stmt ELSE prog_stmt .
+    (9) fun_declaration -> FUN identifier param_list COLON type CLPAR fun_block CRPAR .
 
-    SEMICOLON       reduce using rule 24 (prog_stmt -> IF expr THEN prog_stmt ELSE prog_stmt .)
-    ELSE            reduce using rule 24 (prog_stmt -> IF expr THEN prog_stmt ELSE prog_stmt .)
+    SEMICOLON       reduce using rule 9 (fun_declaration -> FUN identifier param_list COLON type CLPAR fun_block CRPAR .)
 
 
 state 100
-
-    (59) arguments1 -> arguments1 COMMA expr .
-    (30) expr -> expr . OR bint_term
-
-    COMMA           reduce using rule 59 (arguments1 -> arguments1 COMMA expr .)
-    RPAR            reduce using rule 59 (arguments1 -> arguments1 COMMA expr .)
-    OR              shift and go to state 66
-
-
-state 101
-
-    (10) fun_block -> declarations fun_body .
-
-    CRPAR           reduce using rule 10 (fun_block -> declarations fun_body .)
-
-
-state 102
-
-    (21) fun_body -> prog_stmts . RETURN expr SEMICOLON
-
-    RETURN          shift and go to state 105
-
-
-state 103
 
     (20) fun_body -> BEGIN . prog_stmts RETURN expr SEMICOLON END
     (22) prog_stmts -> . prog_stmt SEMICOLON prog_stmts
@@ -1728,24 +1703,56 @@ state 103
     (29) prog_stmt -> . CLPAR block CRPAR
 
     RETURN          reduce using rule 23 (prog_stmts -> .)
-    IF              shift and go to state 17
+    IF              shift and go to state 25
     WHILE           shift and go to state 22
     READ            shift and go to state 23
-    ID              shift and go to state 18
-    PRINT           shift and go to state 20
-    CLPAR           shift and go to state 19
+    ID              shift and go to state 24
+    PRINT           shift and go to state 21
+    CLPAR           shift and go to state 26
 
-    prog_stmt                      shift and go to state 16
-    prog_stmts                     shift and go to state 106
+    prog_stmt                      shift and go to state 19
+    prog_stmts                     shift and go to state 105
+
+state 101
+
+    (10) fun_block -> declarations fun_body .
+
+    CRPAR           reduce using rule 10 (fun_block -> declarations fun_body .)
+
+
+state 102
+
+    (21) fun_body -> prog_stmts . RETURN expr SEMICOLON
+
+    RETURN          shift and go to state 106
+
+
+state 103
+
+    (59) arguments1 -> arguments1 COMMA expr .
+    (30) expr -> expr . OR bint_term
+
+    COMMA           reduce using rule 59 (arguments1 -> arguments1 COMMA expr .)
+    RPAR            reduce using rule 59 (arguments1 -> arguments1 COMMA expr .)
+    OR              shift and go to state 70
+
 
 state 104
 
-    (9) fun_declaration -> FUN identifier param_list COLON type CLPAR fun_block CRPAR .
+    (24) prog_stmt -> IF expr THEN prog_stmt ELSE prog_stmt .
 
-    SEMICOLON       reduce using rule 9 (fun_declaration -> FUN identifier param_list COLON type CLPAR fun_block CRPAR .)
+    SEMICOLON       reduce using rule 24 (prog_stmt -> IF expr THEN prog_stmt ELSE prog_stmt .)
+    ELSE            reduce using rule 24 (prog_stmt -> IF expr THEN prog_stmt ELSE prog_stmt .)
 
 
 state 105
+
+    (20) fun_body -> BEGIN prog_stmts . RETURN expr SEMICOLON END
+
+    RETURN          shift and go to state 107
+
+
+state 106
 
     (21) fun_body -> prog_stmts RETURN . expr SEMICOLON
     (30) expr -> . expr OR bint_term
@@ -1765,37 +1772,21 @@ state 105
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 30
-    expr                           shift and go to state 107
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
-    bint_term                      shift and go to state 39
-    int_term                       shift and go to state 38
-
-state 106
-
-    (20) fun_body -> BEGIN prog_stmts . RETURN expr SEMICOLON END
-
-    RETURN          shift and go to state 108
-
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    expr                           shift and go to state 108
+    int_factor                     shift and go to state 40
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 45
 
 state 107
-
-    (21) fun_body -> prog_stmts RETURN expr . SEMICOLON
-    (30) expr -> expr . OR bint_term
-
-    SEMICOLON       shift and go to state 109
-    OR              shift and go to state 66
-
-
-state 108
 
     (20) fun_body -> BEGIN prog_stmts RETURN . expr SEMICOLON END
     (30) expr -> . expr OR bint_term
@@ -1815,34 +1806,43 @@ state 108
     (53) int_factor -> . BVAL
     (54) int_factor -> . SUB int_factor
 
-    NOT             shift and go to state 29
-    LPAR            shift and go to state 35
-    ID              shift and go to state 36
-    NUM             shift and go to state 40
-    BVAL            shift and go to state 31
-    SUB             shift and go to state 37
+    NOT             shift and go to state 38
+    LPAR            shift and go to state 42
+    ID              shift and go to state 41
+    NUM             shift and go to state 39
+    BVAL            shift and go to state 35
+    SUB             shift and go to state 44
 
-    bint_factor                    shift and go to state 30
-    expr                           shift and go to state 110
-    int_expr                       shift and go to state 32
-    int_factor                     shift and go to state 34
-    bint_term                      shift and go to state 39
-    int_term                       shift and go to state 38
+    int_term                       shift and go to state 34
+    int_expr                       shift and go to state 36
+    expr                           shift and go to state 109
+    int_factor                     shift and go to state 40
+    bint_factor                    shift and go to state 43
+    bint_term                      shift and go to state 45
+
+state 108
+
+    (21) fun_body -> prog_stmts RETURN expr . SEMICOLON
+    (30) expr -> expr . OR bint_term
+
+    SEMICOLON       shift and go to state 110
+    OR              shift and go to state 70
+
 
 state 109
-
-    (21) fun_body -> prog_stmts RETURN expr SEMICOLON .
-
-    CRPAR           reduce using rule 21 (fun_body -> prog_stmts RETURN expr SEMICOLON .)
-
-
-state 110
 
     (20) fun_body -> BEGIN prog_stmts RETURN expr . SEMICOLON END
     (30) expr -> expr . OR bint_term
 
     SEMICOLON       shift and go to state 111
-    OR              shift and go to state 66
+    OR              shift and go to state 70
+
+
+state 110
+
+    (21) fun_body -> prog_stmts RETURN expr SEMICOLON .
+
+    CRPAR           reduce using rule 21 (fun_body -> prog_stmts RETURN expr SEMICOLON .)
 
 
 state 111
