@@ -318,14 +318,8 @@ ply.yacc.yacc()
 
 
 ### CALL THIS ###
-def parse(data):
-	ast = ply.yacc.parse(data, tracking = True)
-	print("LEXING DONE")
-	print("PARSING DONE")
-	return ast;
-	
-def debugParse(data):
-	ast = ply.yacc.parse(data, debug = True,  tracking = True)
+def parse(data, debug):
+	ast = ply.yacc.parse(data, tracking = True, debug = debug)
 	print("LEXING DONE")
 	print("PARSING DONE")
 	return ast;

@@ -6,15 +6,23 @@ from pprint import pprint
 
 ST = []	
 
+## Main calling method ##
 def semanticAnalysis (ast):
+	# creates a starting symbol table with 0 level scope #
 	STtableCreation(ST, ast, 0)
+	
+	# Builds a tree starting at the top of the AST down each branch#
+	# checks variables against type and scope #
 	IR = wf_I_prog(ast)
-	print("SEMANTIC ANALYSIS COMPLETE")
-	#prettyPrint(IR,0)
-	printTable(ST)
+	
+	# Based on the languge given the print method (string vs int) had to be defined 
+	# before the type of the print content was known # 
+	# Print fix should modify the print statements based on the now known type. 
 	printfix(IR)
 	
-	return IR
+	print("SEMANTIC ANALYSIS COMPLETE")
+	
+	return (IR, ST)
 	
 def printfix(node):
 	for child in node.children:
@@ -41,7 +49,7 @@ def printfixhelper(node):
 		(NA, varname, arguments, returnType, offset, scopefound) = item
 		return returnType
 	else:
-		print("AHAHAHAH TYPE")
+		print("Print type unknown")
 		
 def wf_I_prog(node):
 	if node.name == "M_prog":
@@ -441,18 +449,4 @@ def flatten(T):
 	else:
 		return flatten(T[0]) + flatten(T[1:])
 					
-def printTable(current):
-	for st in current:
-		print('[' + st.name + ', ' +  st.scopeType + ', ' +st.returnType +  ', #variables:' + str(st.numberOfLocal) +   ', #arguments: ' + str(st.numberOfArguments) + ', #scope:' + str(st.scope))
-		for attr in st.table:
-			print("	   " + str( attr))
-		print ("]")
 		
-def prettyPrint(current, offset):
-	x = 0
-	while x < offset:
-		print("|", end = "")
-		x += 1
-	print(current.name + " " + str(current.attributes))
-	for child in current.children:
-		prettyPrint(child, (offset + 1))

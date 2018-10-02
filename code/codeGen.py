@@ -6,15 +6,15 @@ from pprint import pprint
 
 labelnum = 1
 
+#Main run method #
 def codeGen (IR):
-	print("CODE GENERATION COMPLETE")
 	code = []
+	
+	#Starts at tree root and works it's way down #
 	g_prog(IR, code)
 	
-	print("___________STACK CODE ____________")
-	for item in code:
-		print (item)
-		
+	print("CODE GENERATION COMPLETE")
+
 	return code
 		
 

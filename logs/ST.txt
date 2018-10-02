@@ -1,0 +1,8 @@
+[fib, L_FUN, M_int, #variables:1, #arguments: 1, #scope:1
+	   ('Var_attr', 'n', 'M_int', -4)
+	   ('Var_attr', 'z', 'M_int', 1)
+]
+[Prog, L_PROG, None, #variables:1, #arguments: 0, #scope:0
+	   ('Var_attr', 'n', 'M_int', 1)
+	   ('Fun_attr', 'fib', ('n', 'M_int'), 'M_int', 0)
+]
