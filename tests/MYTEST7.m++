@@ -1,0 +1,12 @@
+
+var b: int;
+var a: int;
+
+begin
+read a;
+read b;
+
+if b =< a then print a
+else print b;
+
+end

@@ -11,18 +11,18 @@ ALLOC 1
 LOAD_R %fp
 LOAD_R %fp
 LOAD_R %cp
-JUMP fun_fib
+JUMP fun_fac
 PRINT_I
 ALLOC -2
 HALT
-fun_fib: LOAD_R %sp
+fun_fac: LOAD_R %sp
 STORE_R %fp
 ALLOC 1
 LOAD_I 4
 LOAD_R %fp
 LOAD_O -4
-LOAD_I 1
-APP LE
+LOAD_I 0
+APP EQ
 JUMP_C label1
 LOAD_I 1
 LOAD_R %fp
@@ -31,23 +31,16 @@ JUMP label2
 label1: LOAD_R %fp
 LOAD_R %fp
 LOAD_O -4
+LOAD_R %fp
+LOAD_O -4
 LOAD_I 1
 APP SUB
 ALLOC 1
 LOAD_R %fp
 LOAD_R %fp
 LOAD_R %cp
-JUMP fun_fib
-LOAD_R %fp
-LOAD_O -4
-LOAD_I 2
-APP SUB
-ALLOC 1
-LOAD_R %fp
-LOAD_R %fp
-LOAD_R %cp
-JUMP fun_fib
-APP ADD
+JUMP fun_fac
+APP MUL
 LOAD_R %fp
 STORE_O 1
 label2: LOAD_R %fp

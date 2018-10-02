@@ -1,0 +1,9 @@
+var flag:bool;
+fun funny(x:int):int
+{begin return x*x; end}; 
+
+begin
+flag := true;
+print funny(flag);
+end
+

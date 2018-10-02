@@ -1,0 +1,9 @@
+var x :int;
+
+begin
+    read x;
+    read y;
+    if x =< y then x := x * x
+    else x := y * y;
+    print x;
+end 

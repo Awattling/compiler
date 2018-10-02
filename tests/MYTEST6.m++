@@ -1,0 +1,9 @@
+var z:int;
+var x:int;
+
+begin
+read z;
+while z =< 10 do 
+        z:= z+1;
+print z;        
+end

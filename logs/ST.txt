@@ -1,8 +1,19 @@
-[fib, L_FUN, M_int, #variables:1, #arguments: 1, #scope:1
-	   ('Var_attr', 'n', 'M_int', -4)
+[gcd, L_FUN, M_int, #variables:1, #arguments: 2, #scope:2
+	   ('Var_attr', 'x', 'M_int', -4)
+	   ('Var_attr', 'y', 'M_int', -5)
 	   ('Var_attr', 'z', 'M_int', 1)
 ]
-[Prog, L_PROG, None, #variables:1, #arguments: 0, #scope:0
-	   ('Var_attr', 'n', 'M_int', 1)
-	   ('Fun_attr', 'fib', ('n', 'M_int'), 'M_int', 0)
+[gcm, L_FUN, M_int, #variables:0, #arguments: 2, #scope:1
+	   ('Var_attr', 'x', 'M_int', -4)
+	   ('Var_attr', 'y', 'M_int', -5)
+	   ('Fun_attr', 'gcd', (('x', 'M_int'), ('y', 'M_int')), 'M_int', 0)
+]
+[positive, L_FUN, M_bool, #variables:0, #arguments: 1, #scope:1
+	   ('Var_attr', 'x', 'M_int', -4)
+]
+[Prog, L_PROG, None, #variables:2, #arguments: 0, #scope:0
+	   ('Var_attr', 'x', 'M_int', 1)
+	   ('Var_attr', 'y', 'M_int', 2)
+	   ('Fun_attr', 'positive', ('x', 'M_int'), 'M_bool', 0)
+	   ('Fun_attr', 'gcm', (('x', 'M_int'), ('y', 'M_int')), 'M_int', 0)
 ]

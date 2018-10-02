@@ -1,0 +1,5 @@
+var x:bool;
+begin 
+    if true then x := 3
+    else x := 4;
+end 

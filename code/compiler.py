@@ -6,7 +6,6 @@ import lexar
 import parseryacc
 import semanticAnalysis
 import codeGen
-
 #### Functions ####
 
 ## Recursive tree printing to file method ##
@@ -70,6 +69,8 @@ def openFile():
 #### MAIN RUNNING CODE ####
 global lalrTracking
 lalrTracking = False
+
+
 argumentChecks()
 file = openFile()
 
@@ -95,7 +96,10 @@ print ("Check logs for Symbol Table (ST.txt)")
 
 ## Code generation and output to file ##
 code = codeGen.codeGen(IR)
-fname = sys.argv[1].split(".")[0]
-outputfile = open(fname + ".am", 'w')
+fname = sys.argv[1].rsplit(".", 1)[0]
+fname = fname + ".am"
+outputfile = open(fname, 'w')
 for item in code:
 	outputfile.write(item + '\n')
+	
+print("Am stack code found in", fname)

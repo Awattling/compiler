@@ -1,0 +1,16 @@
+var x:int;
+var y:int;
+
+
+fun x (b:int): int
+{var z:int;
+begin if b =< 0 then y := 37
+else z:= 42;
+return z;
+end};
+
+begin
+read x;
+read y;
+print exp(y);
+end
